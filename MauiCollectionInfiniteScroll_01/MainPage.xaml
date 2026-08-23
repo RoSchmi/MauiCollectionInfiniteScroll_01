@@ -13,6 +13,7 @@
             Spacing="25">
 
             <Label
+                Margin="0,20,0,0"
                 Text="Maui CollectionView Infinite Scroll Example"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
@@ -22,12 +23,13 @@
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
             <BoxView BackgroundColor="DarkGray" Margin="0,0,0,5" HeightRequest="20"/>
-            <Grid ColumnDefinitions="*,*,*">
-                <Label Grid.Column="0"
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto, Auto">
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                        Text="Clicking the Go! Button will create a List of Items and will display them in a CollectionView"/>
                 <Button  
                     Text="Go !" 
                     Grid.Column="1"
+                    Grid.Row="1"
                     Margin="0,40,0,0"
                     BackgroundColor="Green"
                     SemanticProperties.Hint="Counts the number of times you click"

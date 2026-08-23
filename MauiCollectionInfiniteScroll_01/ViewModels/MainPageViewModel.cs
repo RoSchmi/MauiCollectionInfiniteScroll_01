@@ -16,29 +16,8 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
 
         #region Region Constructor
         public MainPageViewModel()
-        {    
-            DisplayItemList.Clear();
-            for (int i = 0; i < 100; i++)
-            {
-                TableEntity tableEntity = new TableEntity();             
-                tableEntity.PartitionKey = "First Partition";
-                tableEntity.RowKey = $"RowKey{i}";
-                tableEntity.Timestamp = DateTime.Now;
-
-                _properties.Clear();
-                _properties.Add("T_0", $"Temperature_{i}");
-                _properties.Add("T_1", $"Humidity_{i}");
-                _properties.Add("T_2", $"Voltage_{i}");
-                _properties.Add("T_3", $"Power_{i}");
-
-                foreach (var p in _properties)
-                {
-                    tableEntity[p.Key] = p.Value;
-                }
-
-                DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, _entityDisplaySchema, showIdx: true));
-               
-            }
+        {
+            InitializeSampleData();      
         }
         #endregion
 
@@ -60,5 +39,33 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             await Shell.Current.GoToAsync(nameof(DisplayPage), navigationParameter);           
         }
         #endregion
+
+        #region Region Method InitializeSampleData()
+        void InitializeSampleData()
+        {
+            DisplayItemList.Clear();
+            for (int i = 0; i < 100; i++)
+            {
+                TableEntity tableEntity = new TableEntity();
+                tableEntity.PartitionKey = "FirstPartition";
+                tableEntity.RowKey = $"RowKey{i}";
+                tableEntity.Timestamp = DateTime.Now;
+
+                _properties.Clear();
+                _properties.Add("T_0", $"Temperature_{i}");
+                _properties.Add("T_1", $"Humidity_{i}");
+                _properties.Add("T_2", $"Voltage_{i}");
+                _properties.Add("T_3", $"Power_{i}");
+
+                foreach (var p in _properties)
+                {
+                    tableEntity[p.Key] = p.Value;
+                }
+
+                DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, _entityDisplaySchema, showIdx: true));
+
+            }
+        #endregion
+        }
     }
 }

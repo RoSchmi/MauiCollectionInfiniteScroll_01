@@ -7,8 +7,10 @@
              Title="DisplayPage">
 
     <Grid RowDefinitions="Auto,*">
-        <ActivityIndicator Grid.Row="0" Color="red" IsRunning="True" IsVisible="{Binding IsBusy}"></ActivityIndicator>
-        <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1"  RemainingItemsThreshold="1" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,*" MinimumHeightRequest="30">
+            <ActivityIndicator Grid.Column="1" Color="red" HorizontalOptions="Center" VerticalOptions="Center" IsRunning="True" IsVisible="{Binding IsBusy}"/>
+        </Grid>
+            <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1"  RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:EntityDisplayItem">
                     <Border

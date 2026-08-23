@@ -9,5 +9,10 @@ public partial class DisplayPage : ContentPage
 	{
 		InitializeComponent();   
         BindingContext = vm;
+        // Needed for correct positioning of ActivityIndicator
+        Loaded += (_, _) =>
+        {
+            vm.IsBusy = false;
+        };
     }
 }
