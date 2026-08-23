@@ -52,14 +52,19 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                 tableEntity.Timestamp = DateTime.Now;
 
                 _properties.Clear();
-                _properties.Add("T_0", $"Temperature_{i}");
-                _properties.Add("T_1", $"Humidity_{i}");
-                _properties.Add("T_2", $"Voltage_{i}");
+                _properties.Add("T_0", $"Temp_{i}");
+                _properties.Add("T_1", $"Humid_{i}");
+                _properties.Add("T_2", $"Volt_{i}");
                 _properties.Add("T_3", $"Power_{i}");
 
                 foreach (var p in _properties)
                 {
                     tableEntity[p.Key] = p.Value;
+                }
+
+                if (i == 0)
+                {
+                    _entityDisplaySchema.InitializeFromEntity(tableEntity);
                 }
 
                 DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, _entityDisplaySchema, showIdx: true));

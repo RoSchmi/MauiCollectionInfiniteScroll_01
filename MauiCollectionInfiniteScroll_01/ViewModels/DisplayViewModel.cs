@@ -40,6 +40,9 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             {
                 IsBusy = true;
                 await Task.Delay(100);   // Only to show ActivityIndicator for at least 100 ms
+
+                _entityDisplaySchema = new EntityDisplaySchema();
+
                 int start = DisplayItemList.Count;
                 for (int i = start; i < start + 20; i++)
                 {
@@ -50,14 +53,18 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
 
                     IDictionary<string, object>? properties = new Dictionary<string, object>(0);
 
-                    properties.Add("T_0", $"Temperature_{i}");
-                    properties.Add("T_1", $"Humidity_{i}");
-                    properties.Add("T_2", $"Voltage_{i}");
+                    properties.Add("T_0", $"Temp_{i}");
+                    properties.Add("T_1", $"Humid_{i}");
+                    properties.Add("T_2", $"Volt_{i}");
                     properties.Add("T_3", $"Power_{i}");
 
                     foreach (var p in properties)
                     {
                         tableEntity[p.Key] = p.Value;
+                    }
+                    if (i == start)
+                    {
+                        _entityDisplaySchema.InitializeFromEntity(tableEntity);
                     }
 
                     DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, _entityDisplaySchema, showIdx: true));

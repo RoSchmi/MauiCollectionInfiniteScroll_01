@@ -9,10 +9,11 @@
     <Grid RowDefinitions="Auto,*">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*" MinimumHeightRequest="30">
             <ActivityIndicator Grid.Column="1" Color="red" HorizontalOptions="Center" VerticalOptions="Center" IsRunning="True" IsVisible="{Binding IsBusy}"/>
-        </Grid> 
-            <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1" RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
+        </Grid>
+        <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1" RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:EntityDisplayItem">
+                    <ScrollView Orientation="Horizontal">
                     <Border
                         Background="Grey"
                         Stroke="LightGray"
@@ -21,15 +22,15 @@
                         Margin="10"
                         StrokeShape="RoundRectangle 8">
                         <VerticalStackLayout>
-                            
+
                             <HorizontalStackLayout Spacing="10">
                                 <Label Text="Index: " ></Label>
                                 <Label Text="{Binding Index}" />
                             </HorizontalStackLayout>
-                            
+
                             <HorizontalStackLayout Spacing="10">
                                 <Label Text="PartitionKey: " ></Label>
-                                <Label Text="{Binding PartitionKey}" /> 
+                                <Label Text="{Binding PartitionKey}" />
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout Spacing="10">
@@ -37,22 +38,20 @@
                                 <Label Text="{Binding RowKey}"  />
                             </HorizontalStackLayout>
 
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="Title: " ></Label>
-                                <Label Text="{Binding TimeStamp}" ></Label>
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                                <Label Text="Item: " />
+                                
+                                    <!-- <FlexLayout Direction="Row" Wrap="NoWrap"> -->
+                                       <Label Text="{Binding EntityRow}"/>
+                                    <!--  </FlexLayout> -->
+                                  
                             </HorizontalStackLayout>
-                            
+
                         </VerticalStackLayout>
                     </Border>
+                    </ScrollView>
                 </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        <!-- ActivityIndicator liegt darüber -->
-        <ActivityIndicator
-            Color="red"
-            IsRunning="True"
-            IsVisible="{Binding IsBusy}"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </Grid>
     </ContentPage>

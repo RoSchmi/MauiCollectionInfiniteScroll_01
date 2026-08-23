@@ -75,6 +75,7 @@ namespace MauiCollectionInfiniteScroll_01.Models
             }
 
             EntityRow = BuildFormattedString();
+            
         }
         #endregion
 
