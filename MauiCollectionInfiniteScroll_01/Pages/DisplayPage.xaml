@@ -9,8 +9,8 @@
     <Grid RowDefinitions="Auto,*">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*" MinimumHeightRequest="30">
             <ActivityIndicator Grid.Column="1" Color="red" HorizontalOptions="Center" VerticalOptions="Center" IsRunning="True" IsVisible="{Binding IsBusy}"/>
-        </Grid>
-            <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1"  RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
+        </Grid> 
+            <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1" RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:EntityDisplayItem">
                     <Border
@@ -47,5 +47,12 @@
                 </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </Grid>
+        <!-- ActivityIndicator liegt darüber -->
+        <ActivityIndicator
+            Color="red"
+            IsRunning="True"
+            IsVisible="{Binding IsBusy}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+    </Grid>
     </ContentPage>

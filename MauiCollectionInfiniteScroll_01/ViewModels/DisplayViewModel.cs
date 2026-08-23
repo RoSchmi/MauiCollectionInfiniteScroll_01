@@ -28,7 +28,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         public DisplayViewModel(List<EntityDisplayItem> items)
         { 
             DisplayItemList = items;
-            IsBusy = true;  // Is immediately set to false in constructor of page
+            IsBusy = true;  // Is immediately set to false in Loaded event of page
             
             DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
         }
