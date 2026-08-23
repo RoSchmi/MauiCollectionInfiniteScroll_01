@@ -22,7 +22,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             {
                 TableEntity tableEntity = new TableEntity();             
                 tableEntity.PartitionKey = "First Partition";
-                tableEntity.RowKey = $"RowKey {i}";
+                tableEntity.RowKey = $"RowKey{i}";
                 tableEntity.Timestamp = DateTime.Now;
 
                 _properties.Clear();

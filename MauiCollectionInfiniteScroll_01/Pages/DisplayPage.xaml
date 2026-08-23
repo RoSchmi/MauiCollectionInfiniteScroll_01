@@ -8,11 +8,11 @@
 
     <Grid RowDefinitions="Auto,*">
         <ActivityIndicator Grid.Row="0" Color="red" IsRunning="True" IsVisible="{Binding IsBusy}"></ActivityIndicator>
-        <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1" VerticalOptions="FillAndExpand" RemainingItemsThreshold="1" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
+        <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1"  RemainingItemsThreshold="1" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:EntityDisplayItem">
                     <Border
-                        Background="#eee"
+                        Background="Grey"
                         Stroke="LightGray"
                         StrokeThickness="1"
                         Padding="10"
@@ -26,7 +26,7 @@
                             </HorizontalStackLayout>
                             
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="Partition: " ></Label>
+                                <Label Text="PartitionKey: " ></Label>
                                 <Label Text="{Binding PartitionKey}" /> 
                             </HorizontalStackLayout>
 
