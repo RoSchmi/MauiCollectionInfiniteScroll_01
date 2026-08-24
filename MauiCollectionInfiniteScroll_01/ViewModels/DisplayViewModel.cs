@@ -39,7 +39,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             if (!IsBusy)
             {
                 IsBusy = true;
-                await Task.Delay(100);   // Only to show ActivityIndicator for at least 100 ms
+                await Task.Delay(1);   // Only to show ActivityIndicator for at least 100 ms
 
                 _entityDisplaySchema = new EntityDisplaySchema();
 
