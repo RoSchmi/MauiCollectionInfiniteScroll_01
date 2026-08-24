@@ -1,3 +1,4 @@
+using MauiCollectionInfiniteScroll_01.Models;
 using MauiCollectionInfiniteScroll_01.ViewModels;
 
 
@@ -21,5 +22,18 @@ public partial class DisplayPage : ContentPage
             vm.IsBusy = true;
             vm.IsBusy = false;
         }
+    }
+
+    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var item = e.CurrentSelection.FirstOrDefault() as EntityDisplayItem;
+        if (item == null)
+            return;
+
+        // ViewModel holen
+        var vm = BindingContext as DisplayViewModel;
+
+        // Command ausführen
+        vm?.ItemSelectedCommand.Execute(item); 
     }
 }

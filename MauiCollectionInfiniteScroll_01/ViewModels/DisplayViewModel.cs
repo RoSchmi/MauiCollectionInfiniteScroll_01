@@ -13,6 +13,9 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         [ObservableProperty]
         private bool isBusy;
 
+        [ObservableProperty]
+        private EntityDisplayItem selectedItem;
+
         EntityDisplaySchema _entityDisplaySchema = new EntityDisplaySchema();
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
 
@@ -33,6 +36,8 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
         }
         #endregion
+
+        #region RelayCommand GetNextData
         [RelayCommand]
         private async Task GetNextData()
         {
@@ -73,5 +78,24 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                 IsBusy = false;
             }
         }
+        #endregion
+
+        #region RelayCommand ItemSelected
+        [RelayCommand]
+        private void ItemSelected(EntityDisplayItem item)
+        {
+            if (item == null)
+                return;
+
+            // Here you can react on selection 
+            // Console.WriteLine($"Item selected: {item.RowKey}");
+
+            // Optional: remove selection 
+            // SelectedItem = null;
+            
+            var theSelectedItem = SelectedItem;
+            int breakpoint54 = 1;
+        }
+        #endregion
     }
 }
