@@ -13,44 +13,20 @@
         <ScrollView Grid.Row="1" Orientation="Horizontal">
         <CollectionView ItemsSource="{Binding DisplayItemCollection}" Grid.Row="1" RemainingItemsThreshold="20" RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:EntityDisplayItem">
-                        <!--   <ScrollView Orientation="Horizontal"> -->
-                        <Border
+                    <DataTemplate x:DataType="models:EntityDisplayItem">
+                     <!--   <Border
                         Background="Grey"
                         Stroke="LightGray"
                         StrokeThickness="1"
                         Padding="10"
                         Margin="10"
-                        StrokeShape="RoundRectangle 8">
+                        StrokeShape="RoundRectangle 8"> -->
                         <VerticalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="Index: " ></Label>
-                                <Label Text="{Binding Index}" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="PartitionKey: " ></Label>
-                                <Label Text="{Binding PartitionKey}" />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10">
-                                <Label Text="RowKey: " ></Label>
-                                <Label Text="{Binding RowKey}"  />
-                            </HorizontalStackLayout>
-
-                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
-                                <Label Text="Item: " />
-                                
-                                    <!-- <FlexLayout Direction="Row" Wrap="NoWrap"> -->
-                                       <Label Text="{Binding EntityRow}"/>
-                                    <!--  </FlexLayout> -->
-                                  
-                            </HorizontalStackLayout>
-
-                        </VerticalStackLayout>
-                    </Border>
-                        <!--   </ScrollView> -->
+                                <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                                    <Label Text="{Binding EntityRow}"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                      <!--  </Border> -->
                     </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
