@@ -3,17 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MauiCollectionInfiniteScroll_01.Models"
              xmlns:pages="clr-namespace:MauiCollectionInfiniteScroll_01.Pages"
+             xmlns:viewmodels="clr-namespace:MauiCollectionInfiniteScroll_01.ViewModels"
              x:Class="MauiCollectionInfiniteScroll_01.Pages.DisplayPage"
+             x:DataType="viewmodels:DisplayViewModel"
              Shell.FlyoutBehavior="Disabled"
              Title="DisplayPage">
 
-    <Grid x:Name="DisplayGrid" RowDefinitions="Auto,*">
+    <Grid x:Name="DisplayGrid" RowDefinitions="Auto, Auto, *">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*" MinimumHeightRequest="30">
             <ActivityIndicator Grid.Column="1" Color="red" HorizontalOptions="Center" VerticalOptions="Center" IsRunning="True" IsVisible="{Binding IsBusy}"/>
         </Grid>
-        <ScrollView Grid.Row="1" Orientation="Horizontal">
+
+        <ScrollView x:Name="ScrollHeader" Orientation="Horizontal" Grid.Row="1" Scrolled="OnScrolledHeader" HorizontalScrollBarVisibility="Never">
+            <Label Text="{Binding DisplayHeaderRow}"                      
+                FontSize="Micro"
+                FontAttributes="Bold"
+                TextColor="Grey"
+                Padding="10,1"
+                WidthRequest="2000" >
+                <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="Android" Value="JetBrainsMono" />
+                            <!--https://www.jetbrains.com/lp/mono/-->
+                            <On Platform="iOS"     Value="Menlo" />
+                            <On Platform="WinUI"   Value="Cascadia Mono" />
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                </ScrollView>
+        <ScrollView x:Name="ScrollTable" Grid.Row="2" Orientation="Horizontal" Scrolled="OnScrolledTable">
             <CollectionView ItemsSource="{Binding DisplayItemCollection}" 
-                Grid.Row="1" 
+               
                 RemainingItemsThreshold="20" 
                 RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}" 
                 SelectionMode="Single"
@@ -22,7 +42,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:EntityDisplayItem">
                         <Label Margin="0,5,0,5" 
-                             Text="{Binding EntityRow}">
+                             Text="{Binding EntityRow}" LineBreakMode="NoWrap">
                         </Label>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

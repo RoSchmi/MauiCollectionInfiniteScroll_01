@@ -6,7 +6,8 @@ namespace MauiCollectionInfiniteScroll_01.Pages;
 
 public partial class DisplayPage : ContentPage
 {
-	public DisplayPage(DisplayViewModel vm)
+    bool _syncing = false;
+    public DisplayPage(DisplayViewModel vm)
 	{
 		InitializeComponent();   
         BindingContext = vm;
@@ -35,5 +36,25 @@ public partial class DisplayPage : ContentPage
 
         // Command ausführen
         vm?.ItemSelectedCommand.Execute(item); 
+    }
+    
+    private void OnScrolledHeader(object sender, ScrolledEventArgs e)
+    {
+        if (_syncing)
+            return;
+
+        _syncing = true;
+        ScrollTable.ScrollToAsync(e.ScrollX, 0, false);
+        _syncing = false;
+    }
+
+    private void OnScrolledTable(object sender, ScrolledEventArgs e)
+    {
+        if (_syncing)
+            return;
+
+        _syncing = true;
+        ScrollHeader.ScrollToAsync(e.ScrollX, 0, false);
+        _syncing = false;
     }
 }

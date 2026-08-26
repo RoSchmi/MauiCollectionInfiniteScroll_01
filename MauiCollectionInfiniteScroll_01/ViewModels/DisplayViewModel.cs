@@ -16,7 +16,11 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         [ObservableProperty]
         private EntityDisplayItem selectedItem;
 
-        EntityDisplaySchema _entityDisplaySchema = new EntityDisplaySchema();
+        [ObservableProperty]
+        private string displayHeaderRow = string.Empty;
+
+        [ObservableProperty]
+        private EntityDisplaySchema displaySchema;
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
 
         public List<EntityDisplayItem> DisplayItemList { get; }
@@ -34,6 +38,10 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             IsBusy = true;  // Is immediately set to false in Loaded event of page
             
             DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
+
+             displaySchema = new EntityDisplaySchema();
+
+            DisplayHeaderRow = DisplaySchema.BuildHeader(showIndex: true);
         }
         #endregion
 
@@ -46,7 +54,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                 IsBusy = true;
                 await Task.Delay(1);   // Only to show ActivityIndicator for at least 100 ms
 
-                _entityDisplaySchema = new EntityDisplaySchema();
+               // _entityDisplaySchema = new EntityDisplaySchema();
 
                 int start = DisplayItemList.Count;
                 for (int i = start; i < start + 20; i++)
@@ -69,10 +77,10 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                     }
                     if (i == start)
                     {
-                        _entityDisplaySchema.InitializeFromEntity(tableEntity);
+                        DisplaySchema.InitializeFromEntity(tableEntity);
                     }
 
-                    DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, _entityDisplaySchema, showIdx: true));
+                    DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, DisplaySchema, showIdx: true));
                     DisplayItemCollection.Add(DisplayItemList[DisplayItemList.Count - 1]);
                 }            
                 IsBusy = false;
