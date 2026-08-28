@@ -43,7 +43,16 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:EntityDisplayItem">
                         <Label Margin="0,5,0,5" 
-                             Text="{Binding EntityRow}" LineBreakMode="NoWrap">
+                            Text="{Binding EntityRow}" LineBreakMode="NoWrap" FontSize="Micro" FontAttributes="Bold"  Padding="5,2">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="Android" Value="JetBrainsMono" />
+                                    <!--https://www.jetbrains.com/lp/mono/-->
+                                    <On Platform="iOS"     Value="Menlo" />
+                                    <On Platform="WinUI"   Value="Cascadia Mono" />
+                                </OnPlatform>
+                            </Label.FontFamily>
+
                         </Label>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
