@@ -17,7 +17,10 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         private EntityDisplayItem selectedItem;
 
         [ObservableProperty]
-        private string displayHeaderRow = string.Empty;
+        private string displayHeaderRow;
+
+       // private string displayHeaderRow = string.Empty;
+
 
         //[ObservableProperty]
         public EntityDisplaySchema DisplaySchema { get; }
@@ -46,7 +49,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         [RelayCommand]
         private async Task GetNextData()
         {
-            if (!IsBusy)
+            if (!IsBusy)       
             {
                 IsBusy = true;
                 await Task.Delay(1);   // Only to show ActivityIndicator for at least 100 ms

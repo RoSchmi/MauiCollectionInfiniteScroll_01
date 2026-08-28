@@ -30,15 +30,16 @@
                         </OnPlatform>
                     </Label.FontFamily>
                 </Label>
-                </ScrollView>
+        </ScrollView>
         <ScrollView x:Name="ScrollTable" Grid.Row="2" Orientation="Horizontal" Scrolled="OnScrolledTable">
-            <CollectionView ItemsSource="{Binding DisplayItemCollection}" 
-               
+            <CollectionView ItemsSource="{Binding DisplayItemCollection}"              
                 RemainingItemsThreshold="20" 
-                RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}" 
+                RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}"
+                ItemsUpdatingScrollMode="KeepScrollOffset"
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                SelectionChanged="CollectionView_SelectionChanged">
+                SelectionChanged="CollectionView_SelectionChanged"
+                HorizontalScrollBarVisibility="Never">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:EntityDisplayItem">
                         <Label Margin="0,5,0,5" 
