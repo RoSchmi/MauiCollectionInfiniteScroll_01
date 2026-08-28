@@ -22,12 +22,8 @@ namespace MauiCollectionInfiniteScroll_01
 #endif
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
-            builder.Services.AddTransient<Pages.DisplayPage>();
-            builder.Services.AddTransient<DisplayViewModel>(sp =>
-            {
-                var mainVm = sp.GetRequiredService<MainPageViewModel>();
-                return new DisplayViewModel(mainVm.DisplayItemList);
-            });
+            builder.Services.AddTransient<Pages.DisplayPage>();       
+        
             return builder.Build();
         }
     }

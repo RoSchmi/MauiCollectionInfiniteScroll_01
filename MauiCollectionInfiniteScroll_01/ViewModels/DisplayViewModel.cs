@@ -19,8 +19,8 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         [ObservableProperty]
         private string displayHeaderRow = string.Empty;
 
-        [ObservableProperty]
-        private EntityDisplaySchema displaySchema;
+        //[ObservableProperty]
+        public EntityDisplaySchema DisplaySchema { get; }
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
 
         public List<EntityDisplayItem> DisplayItemList { get; }
@@ -32,16 +32,13 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         }
 
         #region Region Constructor         
-        public DisplayViewModel(List<EntityDisplayItem> items)
+        public DisplayViewModel(List<EntityDisplayItem> items, EntityDisplaySchema schema)
         { 
             DisplayItemList = items;
-            IsBusy = true;  // Is immediately set to false in Loaded event of page
-            
+            IsBusy = true;  // Is immediately set to false in Loaded event of page          
             DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
-
-             displaySchema = new EntityDisplaySchema();
-
-            DisplayHeaderRow = DisplaySchema.BuildHeader(showIndex: true);
+            DisplaySchema = schema;            
+            DisplayHeaderRow = DisplaySchema.BuildHeader(showIndex: true);          
         }
         #endregion
 
@@ -54,27 +51,28 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                 IsBusy = true;
                 await Task.Delay(1);   // Only to show ActivityIndicator for at least 100 ms
 
-               // _entityDisplaySchema = new EntityDisplaySchema();
-
                 int start = DisplayItemList.Count;
                 for (int i = start; i < start + 20; i++)
                 {
+                    // Example
                     TableEntity tableEntity = new TableEntity();
                     tableEntity.PartitionKey = "FirstPartition";
                     tableEntity.RowKey = $"RowKey{i}";
                     tableEntity.Timestamp = DateTime.Now;
 
-                    IDictionary<string, object>? properties = new Dictionary<string, object>(0);
-
-                    properties.Add("T_0", $"Temp_{i}");
-                    properties.Add("T_1", $"Humid_{i}");
-                    properties.Add("T_2", $"Volt_{i}");
-                    properties.Add("T_3", $"Power_{i}");
+                    var properties = new Dictionary<string, object>
+                    {
+                        ["T_0"] = $"Temp_{i}",
+                        ["T_1"] = $"Humid_{i}",
+                        ["T_2"] = $"Volt_{i}",
+                        ["T_3"] = $"Power_{i}"
+                    };               
 
                     foreach (var p in properties)
                     {
                         tableEntity[p.Key] = p.Value;
                     }
+
                     if (i == start)
                     {
                         DisplaySchema.InitializeFromEntity(tableEntity);
@@ -82,7 +80,8 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
 
                     DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, DisplaySchema, showIdx: true));
                     DisplayItemCollection.Add(DisplayItemList[DisplayItemList.Count - 1]);
-                }            
+                }
+                
                 IsBusy = false;
             }
         }
@@ -101,9 +100,8 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             // Optional: remove selection 
             // SelectedItem = null;
             
-            var theSelectedItem = SelectedItem;
-            int breakpoint54 = 1;
+            var theSelectedItem = SelectedItem;           
         }
-        #endregion
+        #endregion  
     }
 }
