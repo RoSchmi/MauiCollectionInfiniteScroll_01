@@ -27,7 +27,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             var theThing = query;
-            // get additional Arguments if needed
+            //  get additional Arguments if needed
         }
 
         #region Region Constructor         
