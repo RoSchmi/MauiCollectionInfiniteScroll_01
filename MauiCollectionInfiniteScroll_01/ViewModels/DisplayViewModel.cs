@@ -19,10 +19,6 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         [ObservableProperty]
         private string displayHeaderRow;
 
-       // private string displayHeaderRow = string.Empty;
-
-
-        //[ObservableProperty]
         public EntityDisplaySchema DisplaySchema { get; }
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
 
@@ -60,15 +56,16 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                     // Example
                     TableEntity tableEntity = new TableEntity();
                     tableEntity.PartitionKey = "FirstPartition";
-                    tableEntity.RowKey = $"RowKey{i}";
+                    tableEntity.RowKey = $"RowKey{i.ToString("D4")}";
                     tableEntity.Timestamp = DateTime.Now;
 
                     var properties = new Dictionary<string, object>
                     {
-                        ["T_0"] = $"Temp_{i}",
-                        ["T_1"] = $"Humid_{i}",
-                        ["T_2"] = $"Volt_{i}",
-                        ["T_3"] = $"Power_{i}"
+                        ["SampleTime"] = $"{DateTimeOffset.UtcNow.ToString("MM-dd-yyyy HH:mm:ss")} +{((int)DateTimeOffset.Now.Offset.TotalMinutes).ToString("D3")}",
+                        ["T_0"] = $"Temp_{i.ToString("D4")}",
+                        ["T_1"] = $"Humid_{i.ToString("D4")}",
+                        ["T_2"] = $"Volt_{i.ToString("D4")}",
+                        ["T_3"] = $"Power_{i.ToString("D4")}"
                     };               
 
                     foreach (var p in properties)
