@@ -8,7 +8,7 @@ Using combination of horizontally scrolling ScrollView and vertically scrolling 
 
 branch master
 
-![gallery](https://github.com/RoSchmi/MauiCollectionInfiniteScroll_01/blob/master/pictures/InfiniteScrollTableView.png)
+![gallery](https://github.com/RoSchmi/MauiCollectionInfiniteScroll_01/blob/develop/pictures/InfiniteScrollTableView.png)
 
 
 branch: frameview
