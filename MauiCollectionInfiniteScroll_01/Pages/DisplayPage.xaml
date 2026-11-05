@@ -32,10 +32,13 @@
                 </Label>
         </ScrollView>
         <ScrollView x:Name="ScrollTable" Grid.Row="2" Orientation="Horizontal" Scrolled="OnScrolledTable">
-            <CollectionView ItemsSource="{Binding DisplayItemCollection}"              
+            <CollectionView 
+                x:Name="DisplayCollectionView"
+                ItemsSource="{Binding DisplayItemCollection}"              
                 RemainingItemsThreshold="20" 
                 RemainingItemsThresholdReachedCommand="{Binding GetNextDataCommand}"
                 ItemsUpdatingScrollMode="KeepScrollOffset"
+                Scrolled="OnVerticallyScrolledCollection"
                 SelectionMode="Single"
                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                 SelectionChanged="CollectionView_SelectionChanged"

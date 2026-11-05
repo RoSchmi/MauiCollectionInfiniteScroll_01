@@ -4,12 +4,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiCollectionInfiniteScroll_01.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 
 namespace MauiCollectionInfiniteScroll_01.ViewModels
 {
     public partial class DisplayViewModel : ObservableObject, IQueryAttributable
     {
+        public Action<bool>? RequestSuppressLayout { get; set; }
+
         [ObservableProperty]
         private bool isBusy;
 
@@ -18,6 +21,12 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
 
         [ObservableProperty]
         private string displayHeaderRow;
+
+        [ObservableProperty]
+        private int actualTopVisibleItemIndex;
+
+        [ObservableProperty]
+        private int actualBottomVisibleItemIndex;
 
         public EntityDisplaySchema DisplaySchema { get; }
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
@@ -44,7 +53,10 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         #region RelayCommand GetNextData
         [RelayCommand]
         private async Task GetNextData()
+
         {
+            Debug.WriteLine($"Entering GetNextData");
+
             if (!IsBusy)       
             {
                 IsBusy = true;
@@ -102,6 +114,13 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
             
             var theSelectedItem = SelectedItem;           
         }
-        #endregion  
+        #endregion
+
+        #region Region VerticallyScrolled
+        public void VerticallyScrolledCollection(ItemsViewScrolledEventArgs e)
+        {
+           // Debug.WriteLine($"Scrolled: ActualTopVisibleItemIndex = {ActualTopVisibleItemIndex}");
+        }
+        #endregion
     }
 }
