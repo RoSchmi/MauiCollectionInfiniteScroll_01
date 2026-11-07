@@ -9,7 +9,7 @@
              Shell.FlyoutBehavior="Disabled"
              Title="DisplayPage">
 
-    <Grid x:Name="DisplayGrid" RowDefinitions="Auto, Auto, *">
+    <Grid x:Name="DisplayGrid" RowDefinitions="Auto, Auto, *, Auto">
         <Grid Grid.Row="0" ColumnDefinitions="*,*,*" MinimumHeightRequest="30">
             <ActivityIndicator Grid.Column="1" Color="red" HorizontalOptions="Center" VerticalOptions="Center" IsRunning="True" IsVisible="{Binding IsBusy}"/>
         </Grid>
@@ -31,8 +31,9 @@
                     </Label.FontFamily>
                 </Label>
         </ScrollView>
-        <ScrollView x:Name="ScrollTable" Grid.Row="2" Orientation="Horizontal" Scrolled="OnScrolledTable">
-            <CollectionView 
+       <ScrollView x:Name="ScrollTable" Grid.Row="2" Orientation="Horizontal" Scrolled="OnScrolledTable"> 
+            <CollectionView
+                Grid.Row="2"
                 x:Name="DisplayCollectionView"
                 ItemsSource="{Binding DisplayItemCollection}"              
                 RemainingItemsThreshold="20" 
@@ -60,6 +61,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </ScrollView>
+       </ScrollView> 
+      <BoxView Grid.Row="3"  Color="Gray" HeightRequest="20"/>
     </Grid>
 </ContentPage>

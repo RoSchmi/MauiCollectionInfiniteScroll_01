@@ -18,20 +18,64 @@ public partial class DisplayPage : ContentPage
 #if ANDROID
     private RecyclerView? _recyclerView;
 #endif
+    
+    #region Region constructor 
     public DisplayPage(DisplayViewModel vm)
 	{
 		InitializeComponent();   
         BindingContext = vm;
+        DisplayCollectionView.HandlerChanged += DisplayCollectionView_HandlerChanged;
 
         Loaded += OnLoaded;
     }
+    #endregion
 
 #if ANDROID
     private async void RecyclerView_LayoutChange(object? sender, Android.Views.View.LayoutChangeEventArgs e)
     {
         Debug.WriteLine($"\r\nRecyclerView_LayoutChanged at {DateTime.Now:HHH:mm:ss.fff}\r\n");
+
+        Debug.WriteLine($"ChildCount = {_recyclerView.ChildCount}");
+
+       // Debug.WriteLine($"AdapterItemCount = {_recyclerView.Adapter?.ItemCount}");
     }
 #endif
+
+
+    private void DisplayCollectionView_HandlerChanged(object? sender, EventArgs e)
+    {
+        if (BindingContext is DisplayViewModel vm)
+        {
+#if ANDROID
+
+            var type = DisplayCollectionView.Handler?.PlatformView?.GetType();
+
+            _recyclerView = DisplayCollectionView.Handler?.PlatformView as RecyclerView;
+
+            if (_recyclerView != null)
+            {
+                _recyclerView.HasFixedSize = true;       // important. Prevents stuttering vertical scrolling
+
+                _recyclerView.LayoutChange += RecyclerView_LayoutChange;
+
+                _recyclerView.ViewTreeObserver.GlobalLayout += (_, _) =>
+                {
+                    Debug.WriteLine($"GlobalLayout {DateTime.Now:HH:mm:ss.fff}");
+                };
+                vm.RequestSuppressLayout = suppress =>
+                {
+                    _recyclerView?.SuppressLayout(suppress);
+
+                };
+            }
+
+            
+#endif
+        }
+    }
+
+
+
 
     private void OnLoaded(object sender, EventArgs e)
     {
@@ -40,39 +84,43 @@ public partial class DisplayPage : ContentPage
         {
             vm.IsBusy = true;
             vm.IsBusy = false;
-      
-#if ANDROID
+            
+            #if ANDROID
 
-        var type = DisplayCollectionView.Handler?.PlatformView?.GetType();
+                        Debug.WriteLine($"ChildCount = {_recyclerView.ChildCount}");
+            /*
+                    var type = DisplayCollectionView.Handler?.PlatformView?.GetType();
 
-        _recyclerView = DisplayCollectionView.Handler?.PlatformView as RecyclerView;
+                    _recyclerView = DisplayCollectionView.Handler?.PlatformView as RecyclerView;
 
-        if (_recyclerView != null)
-        {
-            _recyclerView.HasFixedSize = true;       // important. Prevents stuttering vertical scrolling
+                    if (_recyclerView != null)
+                    {
+                        _recyclerView.HasFixedSize = true;       // important. Prevents stuttering vertical scrolling
 
-            _recyclerView.LayoutChange += RecyclerView_LayoutChange;
+                        _recyclerView.LayoutChange += RecyclerView_LayoutChange;
 
-            _recyclerView.ViewTreeObserver.GlobalLayout += (_, _) =>
-            {
-                Debug.WriteLine($"GlobalLayout {DateTime.Now:HH:mm:ss.fff}");
-            };
-            vm.RequestSuppressLayout = suppress =>
-            {
-                _recyclerView?.SuppressLayout(suppress);
+                        _recyclerView.ViewTreeObserver.GlobalLayout += (_, _) =>
+                        {
+                            Debug.WriteLine($"GlobalLayout {DateTime.Now:HH:mm:ss.fff}");
+                        };
+                        vm.RequestSuppressLayout = suppress =>
+                        {
+                            _recyclerView?.SuppressLayout(suppress);
 
-            };
-        }
+                        };
+                    }
 
-        Debug.WriteLine($"\r\n Printing androidhandler \r\n");
+                    Debug.WriteLine($"\r\n Printing androidhandler \r\n");
 
-        Debug.WriteLine($"Type:      {type?.FullName}");
-        Debug.WriteLine($"BaseType:  {type?.BaseType?.FullName}");
-        Debug.WriteLine($"BaseType2: {type?.BaseType?.BaseType?.FullName}");
-        Debug.WriteLine($"Layout Manager is:  {_recyclerView?.GetLayoutManager()?.GetType().FullName}");
-        Debug.WriteLine($"\r\n Printed androidhandler \r\n");
+                    Debug.WriteLine($"Type:      {type?.FullName}");
+                    Debug.WriteLine($"BaseType:  {type?.BaseType?.FullName}");
+                    Debug.WriteLine($"BaseType2: {type?.BaseType?.BaseType?.FullName}");
+                    Debug.WriteLine($"Layout Manager is:  {_recyclerView?.GetLayoutManager()?.GetType().FullName}");
+                    Debug.WriteLine($"\r\n Printed androidhandler \r\n");
+            */
 
-#endif
+            #endif
+            
         }
 
     }
@@ -104,12 +152,14 @@ public partial class DisplayPage : ContentPage
     
     private void OnScrolledHeader(object sender, ScrolledEventArgs e)
     {
+        /*
         if (_syncing)
             return;
 
         _syncing = true;
         ScrollTable.ScrollToAsync(e.ScrollX, 0, false);
         _syncing = false;
+        */
     }
 
     private void OnScrolledTable(object sender, ScrolledEventArgs e)

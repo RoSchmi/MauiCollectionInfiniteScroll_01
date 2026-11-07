@@ -29,7 +29,10 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         private int actualBottomVisibleItemIndex;
 
         public EntityDisplaySchema DisplaySchema { get; }
-        public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; } = new ObservableCollection<EntityDisplayItem>();
+       
+        public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; }
+
+        public ObservableCollection<EntityDisplayItem> WorkDisplayItemCollection { get; }
 
         public List<EntityDisplayItem> DisplayItemList { get; }
 
@@ -43,8 +46,14 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         public DisplayViewModel(List<EntityDisplayItem> items, EntityDisplaySchema schema)
         { 
             DisplayItemList = items;
-            IsBusy = true;  // Is immediately set to false in Loaded event of page          
-            DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
+            IsBusy = true;  // Is immediately set to false in Loaded event of page
+            Debug.WriteLine($"Started to fill DisplayItemCollection at {DateTime.Now:HH:mm:ss.fff}");
+           // RequestSuppressLayout(true);
+            WorkDisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
+            DisplayItemCollection = WorkDisplayItemCollection;
+           // RequestSuppressLayout(false);
+            Task.Delay(1);
+            Debug.WriteLine($"Finished to fill DisplayItemCollection at {DateTime.Now:HH:mm:ss.fff}");
             DisplaySchema = schema;            
             DisplayHeaderRow = DisplaySchema.BuildHeader(showIndex: true);          
         }
@@ -63,6 +72,7 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                 await Task.Delay(1);   // Only to show ActivityIndicator for at least 100 ms
 
                 int start = DisplayItemList.Count;
+
                 for (int i = start; i < start + 20; i++)
                 {
                     // Example
@@ -91,7 +101,9 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
                     }
 
                     DisplayItemList.Add(new EntityDisplayItem(i, tableEntity, DisplaySchema, showIdx: true));
+                    
                     DisplayItemCollection.Add(DisplayItemList[DisplayItemList.Count - 1]);
+      
                 }
                 
                 IsBusy = false;
