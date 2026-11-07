@@ -32,8 +32,6 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
        
         public ObservableCollection<EntityDisplayItem> DisplayItemCollection { get; }
 
-        public ObservableCollection<EntityDisplayItem> WorkDisplayItemCollection { get; }
-
         public List<EntityDisplayItem> DisplayItemList { get; }
 
         public async void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -47,11 +45,12 @@ namespace MauiCollectionInfiniteScroll_01.ViewModels
         { 
             DisplayItemList = items;
             IsBusy = true;  // Is immediately set to false in Loaded event of page
+
             Debug.WriteLine($"Started to fill DisplayItemCollection at {DateTime.Now:HH:mm:ss.fff}");
-           // RequestSuppressLayout(true);
-            WorkDisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
-            DisplayItemCollection = WorkDisplayItemCollection;
-           // RequestSuppressLayout(false);
+            //RequestSuppressLayout(true);
+            DisplayItemCollection = new ObservableCollection<EntityDisplayItem>(DisplayItemList);
+
+            // RequestSuppressLayout(false);
             Task.Delay(1);
             Debug.WriteLine($"Finished to fill DisplayItemCollection at {DateTime.Now:HH:mm:ss.fff}");
             DisplaySchema = schema;            

@@ -25,7 +25,6 @@ public partial class DisplayPage : ContentPage
 		InitializeComponent();   
         BindingContext = vm;
         DisplayCollectionView.HandlerChanged += DisplayCollectionView_HandlerChanged;
-
         Loaded += OnLoaded;
     }
     #endregion
@@ -35,9 +34,7 @@ public partial class DisplayPage : ContentPage
     {
         Debug.WriteLine($"\r\nRecyclerView_LayoutChanged at {DateTime.Now:HHH:mm:ss.fff}\r\n");
 
-        Debug.WriteLine($"ChildCount = {_recyclerView.ChildCount}");
-
-       // Debug.WriteLine($"AdapterItemCount = {_recyclerView.Adapter?.ItemCount}");
+        Debug.WriteLine($"ChildCount = {_recyclerView.ChildCount}");   
     }
 #endif
 
@@ -46,7 +43,7 @@ public partial class DisplayPage : ContentPage
     {
         if (BindingContext is DisplayViewModel vm)
         {
-#if ANDROID
+        #if ANDROID
 
             var type = DisplayCollectionView.Handler?.PlatformView?.GetType();
 
@@ -64,18 +61,16 @@ public partial class DisplayPage : ContentPage
                 };
                 vm.RequestSuppressLayout = suppress =>
                 {
+                    Debug.WriteLine($"Suppressed Layout ({suppress}) {DateTime.Now:HH:mm:ss.fff}");
                     _recyclerView?.SuppressLayout(suppress);
 
                 };
-            }
 
-            
-#endif
+               // vm.RequestSuppressLayout?.Invoke(true);
+            }   
+        #endif
         }
     }
-
-
-
 
     private void OnLoaded(object sender, EventArgs e)
     {
@@ -83,44 +78,7 @@ public partial class DisplayPage : ContentPage
         if (BindingContext is DisplayViewModel vm)
         {
             vm.IsBusy = true;
-            vm.IsBusy = false;
-            
-            #if ANDROID
-
-                        Debug.WriteLine($"ChildCount = {_recyclerView.ChildCount}");
-            /*
-                    var type = DisplayCollectionView.Handler?.PlatformView?.GetType();
-
-                    _recyclerView = DisplayCollectionView.Handler?.PlatformView as RecyclerView;
-
-                    if (_recyclerView != null)
-                    {
-                        _recyclerView.HasFixedSize = true;       // important. Prevents stuttering vertical scrolling
-
-                        _recyclerView.LayoutChange += RecyclerView_LayoutChange;
-
-                        _recyclerView.ViewTreeObserver.GlobalLayout += (_, _) =>
-                        {
-                            Debug.WriteLine($"GlobalLayout {DateTime.Now:HH:mm:ss.fff}");
-                        };
-                        vm.RequestSuppressLayout = suppress =>
-                        {
-                            _recyclerView?.SuppressLayout(suppress);
-
-                        };
-                    }
-
-                    Debug.WriteLine($"\r\n Printing androidhandler \r\n");
-
-                    Debug.WriteLine($"Type:      {type?.FullName}");
-                    Debug.WriteLine($"BaseType:  {type?.BaseType?.FullName}");
-                    Debug.WriteLine($"BaseType2: {type?.BaseType?.BaseType?.FullName}");
-                    Debug.WriteLine($"Layout Manager is:  {_recyclerView?.GetLayoutManager()?.GetType().FullName}");
-                    Debug.WriteLine($"\r\n Printed androidhandler \r\n");
-            */
-
-            #endif
-            
+            vm.IsBusy = false;     
         }
 
     }
@@ -151,15 +109,13 @@ public partial class DisplayPage : ContentPage
     }
     
     private void OnScrolledHeader(object sender, ScrolledEventArgs e)
-    {
-        /*
+    {      
         if (_syncing)
             return;
 
         _syncing = true;
         ScrollTable.ScrollToAsync(e.ScrollX, 0, false);
-        _syncing = false;
-        */
+        _syncing = false;       
     }
 
     private void OnScrolledTable(object sender, ScrolledEventArgs e)

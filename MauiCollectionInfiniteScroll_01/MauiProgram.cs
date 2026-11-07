@@ -16,8 +16,8 @@ namespace MauiCollectionInfiniteScroll_01
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("JetBrainsMono-Regular.ttf", "JetBrainsMono");
-                    fonts.AddFont("JetBrainsMono-Bold.ttf", "JetBrainsMonoBold");
-
+                    fonts.AddFont("JetBrainsMono-Bold.ttf", "JetBrainsMonoBold"); 
+                    fonts.AddFont("RobotoMono-Regular.ttf", "RobotoMono");
                 });
 
 #if DEBUG
